@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="styles.css" rel="stylesheet" type="text/css">
+  <link href='./lib/main.css' rel='stylesheet' />
+  <script src='https://github.com/mozilla-comm/ical.js/releases/download/v1.4.0/ical.js'></script>
+  <script src='./lib/main.js'></script>
+  <script src='./packages/icalendar/main.global.js'></script>
+  <title>Formulario</title>
+  
+</head>
+<body>
+  <section>
+    <div class="button-container">
+      <a href="#" class="button-btn__open">Agenda</a>
+    </div>
+  </section>
+  <form action="" class="formulario" id="formulario">
+    <div class="modal-container">
+      <div class="modal-style modal-close">
+        <p class="modal-btn__close">x</p>
+        <div class="modal-container__inputs">
+          <h1>Ingresa tus datos para crear tu solicitud</h1>
+
+          <div class="modal-container__row">
+            <div class="modal-form__group" id="grupo-nombre">
+              <label for="nombre">Nombre*</label>
+              <input type="text" name="nombre" id="nombre" >
+              <p class="formulario-requerido">El campo es requerido. </br>No debe llevar simbolos.</p>
+            </div>
+            <div class="modal-form__group" id="grupo-apellido">
+              <label for="apellido">Apellidos*</label>
+              <input type="text" name="apellido" id="apellido">
+              <p class="formulario-requerido">El campo es requerido. </br>No debe llevar simbolos.</p>
+            </div>
+          </div>
+
+          <div class="modal-container__row">
+            <div class="modal-form__group"  id="grupo-correo">
+              <label for="correo">Correo*</label>
+              <input type="email" name="correo" id="correo">
+              <p class="formulario-requerido">No es un correo válido.</p>
+            </div>
+            <div class="modal-form__group_locutorio" id="grupo-locutorio">
+              <label for="locutorio">Locutorio*</label>
+              <select name="locutorio" id="locutorio" onChange="validar()">
+                <option>Seleccione</option>
+                <option value="Creceaquí Santiago Centro">Creceaquí Santiago Centro</option>
+                <option value="Creceaquí Providencia">Creceaquí Providencia</option>
+              </select>
+              <p class="formulario-requerido">El campo es requerido.</p>
+            </div>
+          </div>
+
+          <div class="modal-container__row" >
+            <div class="modal-form__group_date" id="grupo-reserva">
+              <label for="reservalocutorio">Reservar locutorio*</label>
+              <div class="calendar-checkbox">
+                <div id='script-warning'>
+                  <code>ics/feed.ics</code> must be servable
+                </div>
+                <div id='loading'>loading...</div>
+                <div id='calendar'></div>
+                <p class="formulario-requerido">El campo es requerido.</p>
+                <div class="calendar-container">
+                  <div class="calendar-horario">
+                    <input class="checkbox" type="checkbox"/>
+                    <h5>de 09:00 - 09:45</h5>
+                  </div>
+                  <div class="calendar-horario">
+                    <input class="checkbox" type="checkbox"/>
+                    <h5>de 10:00 - 10:45</h5>
+                  </div>
+                  <div class="calendar-horario">
+                    <input class="checkbox" type="checkbox"/>
+                    <h5>de 11:00 - 11:45</h5>
+                  </div>
+                  <div class="calendar-horario">
+                    <input class="checkbox" type="checkbox"/>
+                    <h5>de 14:00 - 14:45</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-container__row">
+            <div class="modal-form__comentarios" >
+              <label for="comentario">Comentarios (Máximo 500 caracteres)</label>
+              <input type="text" name="comentario" id="comentario">
+            </div>
+          </div>
+
+          <div class="modal-container__row">
+            <div class="modal-form__error">
+              <p class="Error-formulario" id="Error-formulario"><b>Error:</b> Completa todos los campos obligatorios.</p>
+            </div>
+          </div>
+
+          <div class="modal-container__row">
+            <div class="modal-form__button">
+              <h1>reCaptcha</h1>
+            </div>
+            <div class="modal-form__button">
+              <label for="apellido">(* Campos Obligatorios)</label>
+              <button type="submit">Enviar</button>
+              <p class="mensaje-exitoso" id="mensaje-exitoso"><b>Formulario enviado exitosamente.</b></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <script>
+     document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          headerToolbar: {
+            left: 'prev',
+            center: 'title',
+            right: 'next'
+          },
+          locale: 'es',
+          initialDate: '2021-03-03',
+          editable: true,
+          dayMaxEvents: true, // allow "more" link when too many events
+          dateClick: function (info) {
+
+            //dibujarCombo(info.dateStr)
+            info.dayEl.style.backgroundColor = '#f1f1f1';
+          }
+        });
+
+        calendar.render();
+      });
+
+  </script>
+
+  <script>
+    let abrir = document.querySelectorAll(".button-btn__open")[0];
+    let cerrar = document.querySelectorAll(".modal-btn__close")[0];
+    let modalC = document.querySelectorAll(".modal-container")[0];
+    let modalStyle = document.querySelectorAll(".modal-style")[0];
+
+    const formulario = document.getElementById("formulario");
+    const inputs = document.querySelectorAll("#formulario input ")
+
+    const expresiones = {
+        nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
+        correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+        fecha:  /.$/,
+        locutorio: /\w+\s\w+$/
+      }
+
+      const campos = {
+        nombre: false,
+        apellido: false,
+        correo: false,
+        reservalocutorio: false,
+        locutorio: false,
+        seleccion: false
+      }
+
+  abrir.addEventListener("click", function(e){
+    e.preventDefault();
+    modalC.style.opacity = "1";
+    modalC.style.visibility = "visible";
+    modalStyle.classList.toggle("modal-close");
+  });
+
+  cerrar.addEventListener("click", function(){
+    modalStyle.classList.toggle("modal-close");
+    setTimeout(function(){
+      modalC.style.opacity = "0";
+      modalC.style.visibility = "hidden";
+    }, 600)
+  });
+
+  window.addEventListener("click", function(e){
+    if(e.target == modalC){
+      modalStyle.classList.toggle("modal-close");
+      setTimeout(function () {
+        modalC.style.opacity = "0";
+        modalC.style.visibility = "hidden";
+      }, 600)
+    }
+  });
+
+  const validarFormulario = (e) =>{
+    switch(e.target.name){
+      case "nombre":
+        validarCampo(expresiones.nombre, e.target, "nombre");
+      break;
+      case "apellido":
+        validarCampo(expresiones.nombre, e.target, "apellido");
+      break;
+      case "correo":
+        validarCampo(expresiones.correo, e.target, "correo");
+      break;
+      case "reservalocutorio":
+        validarCampo(expresiones.fecha, e.target, "reserva");
+      break;
+    }
+  };
+
+  const validarCampo = (expresion, input, campo) => {
+    if (expresion.test(input.value)) {
+      document.querySelector(`#grupo-${campo} .formulario-requerido`).classList.remove("formulario-requerido-active");
+      campos[campo] = true;
+    } else {
+      document.querySelector(`#grupo-${campo} .formulario-requerido`).classList.add("formulario-requerido-active");
+      campos[campo] = false;
+    }
+  };
+
+  inputs.forEach((input)=>{
+    input.addEventListener("keyup", validarFormulario);
+    input.addEventListener("blur", validarFormulario);
+  });
+
+  function validar() {
+    var seleccion = document.getElementById("locutorio");
+    if (seleccion.value == "Creceaquí Santiago Centro") {
+      document.querySelector("#grupo-locutorio .formulario-requerido").classList.remove("formulario-requerido-active");
+      campos["seleccion"] = true;
+    } else if (seleccion.value == "Creceaquí Providencia") {
+      document.querySelector("#grupo-locutorio .formulario-requerido").classList.remove("formulario-requerido-active");
+      campos["seleccion"] = true;
+    } else {
+      document.querySelector("#grupo-locutorio .formulario-requerido").classList.add("formulario-requerido-active");
+      campos["seleccion"] = false;
+    }
+  }
+
+  formulario.addEventListener("submit", (e)=>{
+    e.preventDefault();
+
+// && campos.reserva
+    if(campos.nombre && campos.apellido  && campos.correo && campos.seleccion ){
+      formulario.reset();
+
+      document.getElementById("mensaje-exitoso").classList.add("mensaje-exitoso-active")
+      setTimeout(()=>{
+        document.getElementById("mensaje-exitoso").classList.remove("mensaje-exitoso-active")
+      }, 5000)
+      document.getElementById("Error-formulario").classList.remove("Error-formulario-active")
+    } else {
+      document.getElementById("Error-formulario").classList.add("Error-formulario-active")
+    }
+  });
+
+  </script>
+
+  
+
+
+</body>
+</html>

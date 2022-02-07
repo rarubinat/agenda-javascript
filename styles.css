@@ -1,0 +1,324 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Barlow", sans-serif;
+  color: #333f48;
+}
+.modal-style::-webkit-scrollbar {
+  width: 5px;
+  background: white;
+  overflow: hidden;
+}
+.modal-style::-webkit-scrollbar-thumb {
+  width: 10px;
+  border-radius: 60px;
+  background: #ff8300;
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.button-btn__open {
+  font-size: 12px;
+  border: none;
+  color: white;
+  background: #ff8300;
+  border-radius: 25px;
+  font-weight: bold;
+  padding: 13px 35px;
+  cursor: pointer;
+}
+.modal-container {
+  opacity: 0;
+  visibility: hidden;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(0, 0, 0, 0.3);
+  height: 100%;
+  width: 100vw;
+  overflow: scroll;
+}
+.modal-style {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  vertical-align: bottom;
+  background-color: white;
+  position: relative;
+  height: 100vh;
+  width: 40%;
+  transition: transform 1s;
+  transform: translateY(0%);
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.modal-btn__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: #2c3d46;
+  cursor: pointer;
+}
+.modal-close {
+  transform: translateY(-200%);
+}
+.modal-container__inputs {
+  width: 90%;
+  height: 90%;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+}
+.modal-container__inputs h1 {
+  font-size: 1.17em;
+  text-align: center;
+  margin: 1em;
+}
+.modal-container__row {
+  display: flex;
+}
+
+.modal-form__group {
+  margin-bottom: 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+}
+.modal-form__group,
+.modal-form__comentarios,
+.modal-form__button label {
+  font-size: 0.83rem;
+  margin-bottom: 0.2rem;
+  font-weight: bold;
+}
+.modal-form__group input {
+  width: 100%;
+  height: 2rem;
+  border: 1px solid #707070;
+  padding: 0.1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+.modal-form__group_date {
+  margin-bottom: 0.2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+}
+.modal-form__group_date label {
+  font-size: 0.83rem;
+  margin-bottom: 0.2rem;
+  font-weight: bold;
+}
+.modal-form__group_date input {
+  text-align: center;
+  /* width: 100%; */
+  /* height: 2rem; */
+  /* border: 1px solid #707070; */
+  /* padding: 0.1rem; */
+  /* border-radius: 10px; */
+  /* margin-bottom: 1rem; */
+}
+.modal-form__group_locutorio {
+  margin-bottom: 1rem;
+  width: 100%;
+  float: left;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+}
+.modal-form__group_locutorio label {
+  font-size: 0.83rem;
+  margin-bottom: 0.2rem;
+  font-weight: bold;
+}
+.modal-form__group_locutorio select {
+  width: 102%;
+  height: 2.2rem;
+  border: 1px solid #707070;
+  padding: 0.1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.modal-form__comentarios {
+  margin-bottom: 1rem;
+  width: 100%;
+  float: left;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+}
+
+.modal-form__comentarios input {
+  width: 100%;
+  height: 4rem;
+  border: 1px solid #707070;
+  padding: 0.1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  vertical-align: text-top;
+}
+
+.modal-form__button {
+  margin-bottom: 1rem;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.modal-form__error {
+  margin-bottom: 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 30px;
+  margin-bottom: 30px;
+}
+
+.modal-form__button button {
+  font-size: 16px;
+  font-weight: 400;
+  background: #ff8300;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  width: 80%;
+  margin: 1rem auto;
+  padding: 0.75rem 1rem;
+  display: inline-block;
+  color: white;
+}
+.modal-form__button button:hover {
+  transform: scale(1.05);
+}
+.formulario-requerido {
+  font-size: 12px;
+  color: red;
+  display: none;
+  margin-top: -10px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+.formulario-requerido-active {
+  display: block;
+}
+.Error-formulario {
+  display: none;
+  color: red;
+}
+.Error-formulario-active {
+  display: block;
+}
+.mensaje-exitoso {
+  font-size: 14px;
+  display: none;
+}
+.mensaje-exitoso-active {
+  display: block;
+}
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.calendar-checkbox {
+  display: flex;
+}
+.calendar-horario {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  margin: 10px 0;
+}
+.calendar-horario h5 {
+  padding: 0 10px;
+}
+
+@media (max-width: 1024px) {
+  .modal-style {
+    width: 80%;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-container__row {
+    flex-direction: column;
+  }
+  .modal-style {
+    width: 90%;
+  }
+  .modal-container__row .modal-form__button {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  .modal-form__group_locutorio select {
+    width: 101%;
+  }
+}
+
+@media (max-width: 426px) {
+  .modal-form__group_date {
+    padding: 0;
+  }
+  .modal-form__group {
+    padding: 0;
+  }
+  .modal-form__comentarios {
+    padding: 0;
+  }
+  .modal-form__group_locutorio {
+    padding: 0;
+  }
+  .calendar-checkbox {
+    flex-direction: column;
+    align-items: center;
+  }
+  .calendar-container {
+    margin-bottom: 30px;
+  }
+}
+/* calendar */
+#script-warning {
+  display: none;
+  background: #eee;
+  border-bottom: 1px solid #ddd;
+  padding: 0 10px;
+  line-height: 40px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 12px;
+  color: red;
+}
+#loading {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+#calendar {
+  max-width: 1100px;
+  margin: 30px 10px;
+  padding: 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 330px;
+}
